@@ -181,6 +181,17 @@ class DocumentService(CommonService):
 
     @classmethod
     @DB.connection_context()
+    def get_doc_id_by_doc_name(cls, doc_name):
+        fields = [cls.model.id]
+        doc_id = cls.model.select(*fields) \
+            .where(cls.model.name == doc_name)
+        doc_id = doc_id.dicts()
+        if not doc_id:
+            return
+        return doc_id[0]["id"]
+
+    @classmethod
+    @DB.connection_context()
     def get_thumbnails(cls, docids):
         fields = [cls.model.id, cls.model.thumbnail]
         return list(cls.model.select(
@@ -264,4 +275,10 @@ class DocumentService(CommonService):
                 cls.update_by_id(d["id"], info)
             except Exception as e:
                 stat_logger.error("fetch task exception:" + str(e))
+
+    @classmethod
+    @DB.connection_context()
+    def get_kb_doc_count(cls, kb_id):
+        return len(cls.model.select(cls.model.id).where(
+            cls.model.kb_id == kb_id).dicts())
 

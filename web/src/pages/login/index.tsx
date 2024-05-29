@@ -37,14 +37,10 @@ const Login = () => {
     try {
       const params = await form.validateFields();
 
-<<<<<<< HEAD
       // const rsaPassWord = rsaPsw(params.password) as string;
 
       // Integrate with Penless, don't need to encrypt
       const rsaPassWord = params.password;
-=======
-      const rsaPassWord = rsaPsw(params.password) as string;
->>>>>>> 081f922ee61334f2f6895b01d3ed3ff5d3252b8e
 
       if (title === 'login') {
         const retcode = await login({
