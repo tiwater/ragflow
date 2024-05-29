@@ -91,6 +91,7 @@ services:
       retries: 120
     networks:
       - ragflow
+    restart: always
 
   kibana:
     depends_on:
