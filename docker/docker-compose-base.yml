@@ -89,6 +89,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+    networks:
+      - ragflow
 
   kibana:
     depends_on:
@@ -116,6 +118,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+    networks:
+      - ragflow
 
   mysql:
     image: mysql:5.7.18

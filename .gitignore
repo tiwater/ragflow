@@ -32,3 +32,4 @@ docker/ragflow-logs/
 rag/res/deepdoc
 
 /docker/*.local
+/docker/*.remote
