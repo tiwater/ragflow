@@ -33,3 +33,4 @@ rag/res/deepdoc
 
 /docker/*.local
 /docker/*.remote
+/docker/nginx/cert
