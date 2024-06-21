@@ -219,7 +219,7 @@ To build the Docker images from source:
 ```bash
 $ git clone https://github.com/tiwater/ragflow.git
 $ cd ragflow/
-$ docker build -t penless/ragflow:dev .
+$ docker build -t ticos/ragflow:dev .
 $ cd ragflow/docker
 $ chmod +x ./entrypoint.sh
 $ docker compose up -d

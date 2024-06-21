@@ -192,7 +192,7 @@
 ```bash
 $ git clone https://github.com/tiwater/ragflow.git
 $ cd ragflow/
-$ docker build -t penless/ragflow:v0.7.0 .
+$ docker build -t ticos/ragflow:v0.7.0 .
 $ cd ragflow/docker
 $ chmod +x ./entrypoint.sh
 $ docker compose up -d
