@@ -36,7 +36,7 @@ from api.utils.api_utils import server_error_response
 from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 from pocketbase import PocketBase
 from api.db.db_models import User
-from api.utils.user_utils import user_register, rollback_user_registration
+from user_app import user_register, rollback_user_registration
 from api.utils import get_format_time
 from threading import Lock
 import jwt

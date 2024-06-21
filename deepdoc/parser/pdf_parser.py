@@ -1,4 +1,16 @@
-# -*- coding: utf-8 -*-
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
 import os
 import random
 
@@ -392,11 +404,11 @@ class RAGFlowPdfParser:
                 b["text"].strip()[-1] in ",;:'\"，、‘“；：-",
                 len(b["text"].strip()) > 1 and b["text"].strip(
                 )[-2] in ",;:'\"，‘“、；：",
-                b["text"].strip()[0] in "。；？！?”）),，、：",
+                b_["text"].strip() and b_["text"].strip()[0] in "。；？！?”）),，、：",
             ]
             # features for not concating
             feats = [
-                b.get("layoutno", 0) != b.get("layoutno", 0),
+                b.get("layoutno", 0) != b_.get("layoutno", 0),
                 b["text"].strip()[-1] in "。？！?",
                 self.is_english and b["text"].strip()[-1] in ".!?",
                 b["page_number"] == b_["page_number"] and b_["top"] -

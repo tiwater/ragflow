@@ -62,6 +62,7 @@ An embedding model builds vector index on file chunks. Once you have chosen an e
 
 The following embedding models can be deployed locally:
 
+- BAAI/bge-large-zh-v1.5
 - BAAI/bge-base-en-v1.5
 - BAAI/bge-large-en-v1.5
 - BAAI/bge-small-en-v1.5
@@ -123,7 +124,7 @@ RAGFlow uses multiple recall of both full-text search and vector search in its c
 
 ## Search for knowledge base
 
-As of RAGFlow v0.6.0, the search feature is still in a rudimentary form, supporting only knowledge base search by name.
+As of RAGFlow v0.7.0, the search feature is still in a rudimentary form, supporting only knowledge base search by name.
 
 ![search knowledge base](https://github.com/infiniflow/ragflow/assets/93570324/836ae94c-2438-42be-879e-c7ad2a59693e)
 
