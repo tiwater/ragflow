@@ -1,4 +1,18 @@
-# -*- coding: utf-8 -*-
+#
+#  Copyright 2024 The InfiniFlow Authors. All Rights Reserved.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
 
 import json
 import math
@@ -44,7 +58,7 @@ class EsQueryer:
 
     def question(self, txt, tbl="qa", min_match="60%"):
         txt = re.sub(
-            r"[ \r\n\t,，。？?/`!！&\^%%]+",
+            r"[ :\r\n\t,，。？?/`!！&\^%%]+",
             " ",
             rag_tokenizer.tradi2simp(
                 rag_tokenizer.strQ2B(
@@ -54,7 +68,8 @@ class EsQueryer:
         if not self.isChinese(txt):
             tks = rag_tokenizer.tokenize(txt).split(" ")
             tks_w = self.tw.weights(tks)
-            q = [re.sub(r"[ \\\"']+", "", tk)+"^{:.4f}".format(w) for tk, w in tks_w]
+            tks_w = [(re.sub(r"[ \\\"']+", "", tk), w) for tk, w in tks_w]
+            q = ["{}^{:.4f}".format(tk, w) for tk, w in tks_w if tk]
             for i in range(1, len(tks_w)):
                 q.append("\"%s %s\"^%.4f" % (tks_w[i - 1][0], tks_w[i][0], max(tks_w[i - 1][1], tks_w[i][1])*2))
             if not q:
@@ -136,7 +151,11 @@ class EsQueryer:
         from sklearn.metrics.pairwise import cosine_similarity as CosineSimilarity
         import numpy as np
         sims = CosineSimilarity([avec], bvecs)
+        tksim = self.token_similarity(atks, btkss)
+        return np.array(sims[0]) * vtweight + \
+            np.array(tksim) * tkweight, tksim, sims[0]
 
+    def token_similarity(self, atks, btkss):
         def toDict(tks):
             d = {}
             if isinstance(tks, str):
@@ -149,9 +168,7 @@ class EsQueryer:
 
         atks = toDict(atks)
         btkss = [toDict(tks) for tks in btkss]
-        tksim = [self.similarity(atks, btks) for btks in btkss]
-        return np.array(sims[0]) * vtweight + \
-            np.array(tksim) * tkweight, tksim, sims[0]
+        return [self.similarity(atks, btks) for btks in btkss]
 
     def similarity(self, qtwt, dtwt):
         if isinstance(dtwt, type("")):
