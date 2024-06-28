@@ -26,7 +26,7 @@ user_default_llm:
   api_key: ''
   base_url: ''
 pocketbase:
-  host: 'https://luban.ticosdev.cc'
+  host: 'https://nb.fftai.dev'
 oauth:
   github:
     client_id: xxxxxxxxxxxxxxxxxxxxxxxxx
