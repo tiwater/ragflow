@@ -3,6 +3,10 @@ USER  root
 
 WORKDIR /ragflow
 
+ADD ./requirements_dev.txt ./requirements_dev.txt
+RUN pip3 install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements_dev.txt
+RUN pip3 install -i https://mirrors.aliyun.com/pypi/simple/ pocketbase --no-deps
+
 ## for cuda > 12.0
 RUN /root/miniconda3/envs/py11/bin/pip uninstall -y onnxruntime-gpu
 RUN /root/miniconda3/envs/py11/bin/pip install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
