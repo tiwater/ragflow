@@ -80,6 +80,17 @@ def load_model(model_dir, nm):
             model_file_path,
             options=options,
             providers=['CPUExecutionProvider'])
+    # Enable code below and disable code above to use GPU
+    # if ort.get_device() == "GPU":
+    #     sess = ort.InferenceSession(
+    #         model_file_path,
+    #         options=options,
+    #         providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
+    # else:
+    #     sess = ort.InferenceSession(
+    #         model_file_path,
+    #         options=options,
+    #         providers=['CPUExecutionProvider'])
     return sess, sess.get_inputs()[0]
 
 

@@ -1,5 +1,5 @@
 FROM infiniflow/ragflow-base:v2.0
-USER  root
+USER root
 
 WORKDIR /ragflow
 
@@ -8,9 +8,15 @@ RUN pip3 install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements_dev.
 RUN pip3 install -i https://mirrors.aliyun.com/pypi/simple/ pocketbase --no-deps
 
 ## for cuda > 12.0
-RUN /root/miniconda3/envs/py11/bin/pip uninstall -y onnxruntime-gpu
-RUN /root/miniconda3/envs/py11/bin/pip install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
+RUN pip3 uninstall -y onnxruntime-gpu
+RUN pip3 install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
 
+# for cuDNN
+RUN wget https://developer.download.nvidia.com/compute/cudnn/9.2.0/local_installers/cudnn-local-repo-ubuntu2204-9.2.0_1.0-1_amd64.deb
+RUN dpkg -i cudnn-local-repo-ubuntu2204-9.2.0_1.0-1_amd64.deb
+RUN cp /var/cudnn-local-repo-ubuntu2204-9.2.0/cudnn-*-keyring.gpg /usr/share/keyrings/
+RUN apt-get update
+RUN apt-get -y install cudnn
 
 ADD ./web ./web
 RUN cd ./web && npm i --force && npm run build
