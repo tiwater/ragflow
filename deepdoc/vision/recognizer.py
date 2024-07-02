@@ -57,6 +57,13 @@ class Recognizer(object):
             self.ort_sess = ort.InferenceSession(model_file_path, options=options, providers=[('CUDAExecutionProvider')])
         else:
             self.ort_sess = ort.InferenceSession(model_file_path, providers=['CPUExecutionProvider'])
+        # Enable code below and disable code above to use GPU
+        # if ort.get_device() == "GPU":
+        #     options = ort.SessionOptions()
+        #     options.enable_cpu_mem_arena = False
+        #     self.ort_sess = ort.InferenceSession(model_file_path, options=options, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
+        # else:
+        #     self.ort_sess = ort.InferenceSession(model_file_path, providers=['CPUExecutionProvider'])
         self.input_names = [node.name for node in self.ort_sess.get_inputs()]
         self.output_names = [node.name for node in self.ort_sess.get_outputs()]
         self.input_shape = self.ort_sess.get_inputs()[0].shape[2:4]
