@@ -24,22 +24,40 @@ function usage() {
     exit 1
 }
 
-ENABLE_WEBSERVER=1 # Default to enable web server
-ENABLE_TASKEXECUTOR=1  # Default to enable task executor
-ENABLE_MCP_SERVER=0
-CONSUMER_NO_BEG=0
-CONSUMER_NO_END=0
-WORKERS=1
+# Default values if environment variables are not set
+ENABLE_WEBSERVER=${ENABLE_WEBSERVER:-1} # Default to enable web server
+ENABLE_TASKEXECUTOR=${ENABLE_TASKEXECUTOR:-1}  # Default to enable task executor
+ENABLE_MCP_SERVER=${ENABLE_MCPSERVER:-0}
+CONSUMER_NO_BEG=${CONSUMER_NO_BEG:-0}
+CONSUMER_NO_END=${CONSUMER_NO_END:-0}
+WORKERS=${WORKERS:-1}
 
-MCP_HOST="127.0.0.1"
-MCP_PORT=9382
-MCP_BASE_URL="http://127.0.0.1:9380"
-MCP_SCRIPT_PATH="/ragflow/mcp/server/server.py"
-MCP_MODE="self-host"
-MCP_HOST_API_KEY=""
-MCP_TRANSPORT_SSE_FLAG="--transport-sse-enabled"
-MCP_TRANSPORT_STREAMABLE_HTTP_FLAG="--transport-streamable-http-enabled"
-MCP_JSON_RESPONSE_FLAG="--json-response"
+# MCP server configuration from environment variables
+MCP_HOST=${MCP_HOST:-"0.0.0.0"}
+MCP_PORT=${MCP_PORT:-9382}
+MCP_BASE_URL=${MCP_BASE_URL:-"http://127.0.0.1:9380"}
+MCP_SCRIPT_PATH=${MCP_SCRIPT_PATH:-"/ragflow/mcp/server/server.py"}
+MCP_MODE=${MCP_MODE:-"self-host"}
+MCP_HOST_API_KEY=${MCP_HOST_API_KEY:-""}
+
+# Transport flags based on environment variables
+if [ "${TRANSPORT_SSE_ENABLED}" = "false" ]; then
+  MCP_TRANSPORT_SSE_FLAG="--no-transport-sse-enabled"
+else
+  MCP_TRANSPORT_SSE_FLAG="--transport-sse-enabled"
+fi
+
+if [ "${TRANSPORT_STREAMABLE_HTTP_ENABLED}" = "false" ]; then
+  MCP_TRANSPORT_STREAMABLE_HTTP_FLAG="--no-transport-streamable-http-enabled"
+else
+  MCP_TRANSPORT_STREAMABLE_HTTP_FLAG="--transport-streamable-http-enabled"
+fi
+
+if [ "${JSON_RESPONSE}" = "false" ]; then
+  MCP_JSON_RESPONSE_FLAG="--no-json-response"
+else
+  MCP_JSON_RESPONSE_FLAG="--json-response"
+fi
 
 # -----------------------------------------------------------------------------
 # Host ID logic:
