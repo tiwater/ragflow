@@ -24,7 +24,7 @@ RUN mkdir -p /ragflow/logs /ragflow/history_data_agent
 COPY ./nginx/ragflow.conf /etc/nginx/conf.d/ragflow.conf
 COPY ./nginx/proxy.conf /etc/nginx/proxy.conf
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./service_conf.yaml /ragflow/conf/service_conf.yaml
+COPY ./service_conf.yaml.template /ragflow/conf/service_conf.yaml.template
 COPY ./entrypoint.sh /ragflow/entrypoint.sh
 
 # Make entrypoint script executable
