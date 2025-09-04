@@ -180,15 +180,14 @@ async def list_tools(*, connector) -> list[types.Tool]:
     return [
         types.Tool(
             name="ragflow_retrieval",
-            description="Retrieve relevant chunks from the RAGFlow retrieve interface based on the question. You can optionally specify dataset_ids to search only specific datasets, or omit dataset_ids entirely to search across ALL available datasets. You can also optionally specify document_ids to search within specific documents. When dataset_ids is not provided or is empty, the system will automatically search across all available datasets. Below is the list of all available datasets, including their descriptions and IDs:"
-            + dataset_description,
+            description="Retrieve relevant chunks from the RAGFlow retrieve interface based on the question, using the specified dataset_ids and optionally document_ids.",
             inputSchema={
                 "type": "object",
                 "properties": {
                     "dataset_ids": {
                         "type": "array",
                         "items": {"type": "string"},
-                        "description": "Optional array of dataset IDs to search. If not provided or empty, all datasets will be searched."
+                        "description": "Array of dataset IDs to search."
                     },
                     "document_ids": {
                         "type": "array",
@@ -197,7 +196,7 @@ async def list_tools(*, connector) -> list[types.Tool]:
                     },
                     "question": {"type": "string", "description": "The question or query to search for."},
                 },
-                "required": ["question"],
+                "required": ["dataset_ids", "question"],
             },
         ),
     ]
